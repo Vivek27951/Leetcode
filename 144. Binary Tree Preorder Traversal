@@ -1,0 +1,38 @@
+class Solution {
+public:
+    
+    void f(TreeNode* root,vector<int>& v){
+        if(root==NULL)  return ;
+        v.push_back(root->val);
+        f(root->left,v);
+        f(root->right,v);
+    }
+    
+    vector<int> preorderTraversal(TreeNode* root) {
+        vector<int>v;
+        f(root,v);
+        return v;
+    }
+};
+
+
+
+class Solution {
+public:
+    vector<int> preorderTraversal(TreeNode* root) {
+        vector<int>v;
+        stack<TreeNode*>st;
+        TreeNode* curr = root;
+        while(curr!=NULL || !st.empty()){
+            while(curr){
+                v.push_back(curr->val);
+                st.push(curr);
+                curr = curr->left;
+            }
+            curr = st.top();
+            st.pop();
+            curr = curr->right;
+        }
+        return v;
+    }
+};
