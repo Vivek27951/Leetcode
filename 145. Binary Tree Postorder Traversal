@@ -1,0 +1,52 @@
+class Solution {
+public:
+    
+    void f(TreeNode* root,vector<int>& v){
+        if(root==NULL)
+            return ;
+        f(root->left,v);
+        f(root->right,v);
+        v.push_back(root->val);
+    }
+    
+    vector<int> postorderTraversal(TreeNode* root) {
+        vector<int>v;
+        f(root,v);
+        return v;
+    }
+};
+
+
+
+
+
+
+class Solution {
+public:
+    
+    vector<int> postorderTraversal(TreeNode* root) {
+        vector<int>v;
+        stack<TreeNode*>st;
+        TreeNode* curr = root;
+        TreeNode* prev = NULL;
+        while(true){
+            while(curr){
+                st.push(curr);
+                curr = curr->left;
+            }
+            if(st.empty()) break;
+            while(curr==NULL && !st.empty()){
+                curr = st.top();
+                if(curr->right==NULL || curr->right==prev){
+                    v.push_back(curr->val);
+                    st.pop();
+                    prev = curr;
+                    curr = NULL;
+                }
+                else
+                    curr = curr->right;
+            }
+        }
+        return v;
+    }
+};
