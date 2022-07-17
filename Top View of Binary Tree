@@ -1,0 +1,31 @@
+class Solution
+{
+    public:
+    //Function to return a list of nodes visible from the top view 
+    //from left to right in Binary Tree.
+    void f(Node* root,vector<int>& v,int d,map<int,pair<int,int>>& mp,int l){
+        if(root==NULL)
+            return;
+        if(mp.find(d)==mp.end() || mp[d].second>l){
+            pair<int,int> p = {root->data,l};
+            mp[d] = p;
+        }
+        f(root->left,v,d-1,mp,l+1);
+        f(root->right,v,d+1,mp,l+1);
+    }
+    
+    vector<int> topView(Node *root)
+    {
+        //Your code here
+        vector<int>v;
+        map<int,pair<int,int>>mp;
+        int d = 0;
+        int l = 0;
+        f(root,v,d,mp,l);
+        for(auto x:mp){
+            v.push_back(x.second.first);
+        }
+        return v;
+    }
+
+};
