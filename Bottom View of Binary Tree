@@ -1,0 +1,29 @@
+class Solution {
+  public:
+  
+    void f(Node* root,int pd,map<int,pair<int,int>>& mp,int l){
+        if(root==NULL)
+            return ;
+        if(mp.find(pd)==mp.end() || mp[pd].second<=l){
+            pair<int,int> p = {root->data,l};
+            mp[pd] =  p;
+        }
+        f(root->left,pd-1,mp,l+1);
+        f(root->right,pd+1,mp,l+1);
+    }
+  
+    vector <int> bottomView(Node *root) {
+        // Your Code Here
+        vector<int>v;
+        if(root==NULL)
+            return v;
+        int pd = 0;
+        int l = 0;
+        map<int,pair<int,int>>mp;
+        f(root,pd,mp,l);
+        for(auto i : mp) {
+            v.push_back(i.second.first);
+        }
+        return v;
+    }
+};
