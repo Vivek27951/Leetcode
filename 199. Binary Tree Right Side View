@@ -1,0 +1,51 @@
+class Solution {
+public:
+    vector<int> rightSideView(TreeNode* root) {
+        vector<int>v;
+        if(root==NULL)
+            return v;
+            queue<TreeNode*>q;
+            q.push(root);
+            while(!q.empty()){
+                int s = q.size();
+                v.push_back(q.front()->val);
+                while(s--){
+                    TreeNode* temp = q.front();
+                    q.pop();
+                    if(temp->right)
+                        q.push(temp->right);
+                    if(temp->left)
+                        q.push(temp->left);
+                }
+            }
+            return v;
+    }
+};
+
+
+
+
+
+
+class Solution {
+public:
+    
+    void f(TreeNode* root,int& max_depth,int curr_depth,vector<int>& v){
+        if(!root)
+            return ;
+        if(curr_depth>max_depth){
+            v.push_back(root->val);
+            max_depth = curr_depth;
+        }
+        f(root->right,max_depth,curr_depth+1,v);
+        f(root->left,max_depth,curr_depth+1,v);
+    }
+    
+    vector<int> rightSideView(TreeNode* root) {
+        int max_depth = -1;
+        int curr_depth = 0;
+        vector<int>v;
+        f(root,max_depth,curr_depth,v);
+        return v;
+    }
+};
