@@ -1,0 +1,21 @@
+class Solution {
+public:
+    
+    int f(TreeNode* root){
+        if(root==NULL)
+            return 0;
+        int ld = f(root->left);
+        if(ld==-1) return -1;
+        int rd = f(root->right);
+        if(rd==-1) return -1;
+        if(abs(ld-rd)>1)
+            return -1;
+        return 1+max(ld,rd);
+    }
+    
+    bool isBalanced(TreeNode* root) {
+        if(root==NULL)
+            return true;
+        return f(root)!=-1;
+    }
+};
