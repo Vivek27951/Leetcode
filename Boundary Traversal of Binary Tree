@@ -1,0 +1,40 @@
+#include <bits/stdc++.h>
+void inorder(TreeNode<int>* root,vector<int>& bottom){
+    if(root==NULL)
+        return;
+    inorder(root->left,bottom);
+    if(!root->left && !root->right)
+        bottom.push_back(root->data);
+    inorder(root->right,bottom);
+}
+
+vector<int> traverseBoundary(TreeNode<int>* root){
+    // Write your code here.
+    if(!root->left && !root->right)
+        return{root->data};
+    vector<int>left,right,bottom;
+    left.push_back(root->data);
+    TreeNode<int>* curr = root->left;
+    while(curr && (curr->left || curr->right)){
+        left.push_back(curr->data);
+        if(curr->left)
+            curr = curr->left;
+        else
+            curr = curr->right;
+    }
+    curr = root->right;
+    while(curr && (curr->left || curr->right)){
+        right.push_back(curr->data);
+        if(curr->right)
+            curr = curr->right;
+        else
+            curr = curr->left;
+    }
+    reverse(right.begin(),right.end());
+    inorder(root,bottom);
+    for(auto x:bottom)
+        left.push_back(x);
+    for(auto x:right)
+        left.push_back(x);
+    return left;
+}
