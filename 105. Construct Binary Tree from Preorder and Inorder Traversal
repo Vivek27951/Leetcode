@@ -1,0 +1,35 @@
+class Solution {
+public:
+    
+    int find_pos(vector<int>& inorder,int num,int s,int e){
+        for(int i=s;i<=e;i++){
+            if(inorder[i]==num)
+                return i;
+        }
+        return -1;
+    }
+    
+    TreeNode* f(vector<int>& preorder, vector<int>& inorder,int& index,int n,int s,int e){
+        if(s>e)
+            return NULL;
+        if(s==e){
+            return new TreeNode(preorder[index]);
+        }
+        int i = find_pos(inorder,preorder[index],s,e);
+        TreeNode* root = new TreeNode(preorder[index]);
+        if(s<=i-1)
+            index++;
+        root->left = f(preorder,inorder,index,n,s,i-1);
+        if(i+1<=e)
+            index++;
+        root->right = f(preorder,inorder,index,n,i+1,e);
+        return root;
+    }
+    
+    TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
+        int n = preorder.size();
+        int m = n;
+        int index = 0;
+        return f(preorder,inorder,index,n,0,m-1);
+    }
+};
