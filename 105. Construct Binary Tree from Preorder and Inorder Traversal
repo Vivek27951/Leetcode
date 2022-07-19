@@ -33,3 +33,53 @@ public:
         return f(preorder,inorder,index,n,0,m-1);
     }
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class Solution {
+public:
+    
+    int find_pos(vector<int>& inorder,int num,int s,int e){
+        for(int i=s;i<=e;i++){
+            if(inorder[i]==num)
+                return i;
+        }
+        return -1;
+    }
+    
+    TreeNode* f(vector<int>& preorder, vector<int>& inorder,int& index,int s,int e,unordered_map<int,int>& mp){
+        if(s>e)
+            return NULL;
+        TreeNode* root = new TreeNode(preorder[index++]);
+        if(s==e)
+            return root;
+        int i = mp[root->val];
+        root->left = f(preorder,inorder,index,s,i-1,mp);
+        root->right = f(preorder,inorder,index,i+1,e,mp);
+        return root;
+    }
+    
+    TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
+        int m = preorder.size();
+        unordered_map<int,int>mp;
+        for(int i=0;i<m;i++)
+            mp[inorder[i]] = i;
+        int index = 0;
+        return f(preorder,inorder,index,0,m-1,mp);
+    }
+};
