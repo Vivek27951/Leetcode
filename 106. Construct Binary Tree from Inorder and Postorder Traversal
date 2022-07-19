@@ -1,0 +1,24 @@
+class Solution {
+public:
+    
+    TreeNode* f(vector<int>& inorder, vector<int>& postorder,int is,int ie,int ps,int pe,unordered_map<int,int>& mp){
+        if(is>ie || ps>pe)
+            return NULL;
+        TreeNode* root = new TreeNode(postorder[pe]);
+        if(is==ie || ps==pe)
+            return root;
+        int i = mp[root->val];
+        int d = ie-i;                                                                                                 
+        root->left = f(inorder,postorder,is,i-1,ps,pe-1-d,mp);
+        root->right = f(inorder,postorder,i+1,ie,pe-d,pe-1,mp);
+        return root;
+    }
+    
+    TreeNode* buildTree(vector<int>& inorder, vector<int>& postorder) {
+        int n = inorder.size();
+        unordered_map<int,int>mp;
+        for(int i=0;i<n;i++)
+            mp[inorder[i]]=i;
+        return f(inorder,postorder,0,n-1,0,n-1,mp);
+    }
+};
