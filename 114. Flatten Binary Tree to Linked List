@@ -1,0 +1,23 @@
+class Solution {
+public:
+    
+    TreeNode* f(TreeNode* root){
+        if(!root || (!root->left && !root->right))
+            return root;
+        TreeNode* lp = f(root->left);
+        TreeNode* rp = f(root->right);
+        root->left = NULL;
+        if(lp){
+            root->right = lp;
+            while(lp->right){
+                lp = lp->right;
+            }
+            lp->right = rp;
+        }   
+        return root;
+    }
+    
+    void flatten(TreeNode* root) {
+        f(root);
+    }
+};
