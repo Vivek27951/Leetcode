@@ -1,0 +1,35 @@
+class Solution {
+public:
+    
+    bool f(TreeNode* root,long long s,long long e){
+        if(!root)   return true;
+        return s<=root->val && root->val<=e && 
+            f(root->left,s,(long long)root->val-1) && f(root->right,(long long)root->val+1,e);
+    }
+    
+    bool isValidBST(TreeNode* root) {
+        if(!root)
+            return true;
+        return f(root,INT_MIN,INT_MAX);
+    }
+};
+
+
+
+
+
+class Solution {
+public:
+    
+    bool f(TreeNode* root,long long s,long long e){
+        if(!root)   return true;
+        return s<root->val && root->val<e && 
+            f(root->left,s,root->val) && f(root->right,root->val,e);
+    }
+    
+    bool isValidBST(TreeNode* root) {
+        if(!root)
+            return true;
+        return f(root,LONG_MIN,LONG_MAX);
+    }
+};
