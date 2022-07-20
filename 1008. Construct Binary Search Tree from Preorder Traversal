@@ -1,0 +1,27 @@
+class Solution {
+public:
+    
+    TreeNode* f(vector<int>& p,vector<int>& v,int ps,int pe,int is,int ie,unordered_map<int,int>& mp){
+        if(ps>pe || is>ie)
+            return NULL;
+        TreeNode* root = new TreeNode(p[ps]);
+        if(ps==pe || is==ie)
+            return root;
+        int i = mp[p[ps]]; 
+        int ld = i-is;
+        int rd = ie-i;
+        root->left = f(p,v,ps+1,pe-rd,is,i-1,mp);
+        root->right = f(p,v,ps+1+ld,pe,i+1,ie,mp);
+        return root;
+    }
+    
+    TreeNode* bstFromPreorder(vector<int>& preorder) {
+        vector<int> v = preorder;
+        sort(v.begin(),v.end());
+        int n = v.size();
+        cout<<v[0]<<" "<<preorder[0]<<endl;
+        unordered_map<int,int>mp;
+        for(int i=0;i<n;i++) mp[v[i]] = i;
+        return f(preorder,v,0,n-1,0,n-1,mp);
+    }
+};
