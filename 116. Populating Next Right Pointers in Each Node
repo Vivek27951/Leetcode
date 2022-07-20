@@ -1,0 +1,19 @@
+class Solution {
+public:
+    
+    void f(Node* curr){
+        curr->left->next = curr->right;
+        if(!curr->next) return;
+        curr->right->next = curr->next->left;
+        f(curr->next);
+    }
+    
+    Node* connect(Node* root) {
+        Node* curr = root;
+        while(curr && curr->left){
+            f(curr);
+            curr = curr->left;
+        }
+        return root;
+    }
+};
