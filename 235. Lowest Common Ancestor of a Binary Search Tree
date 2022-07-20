@@ -1,0 +1,17 @@
+class Solution {
+public:
+    
+    TreeNode* f(TreeNode* root,int s,int e){
+        if(s<=root->val && root->val<=e)
+            return root;
+        if(s>root->val)
+            return f(root->right,s,e);
+        return f(root->left,s,e);
+    }
+    
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        int s = min(p->val,q->val);
+        int e = max(p->val,q->val);
+        return f(root,s,e);
+    }
+};
