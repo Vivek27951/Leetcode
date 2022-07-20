@@ -17,3 +17,26 @@ public:
         return root;
     }
 };
+
+
+
+
+
+class Solution {
+public:
+    
+    Node* connect(Node* root) {
+        Node* curr = root;
+        while(curr && curr->left){
+            Node* temp = curr;
+            while(1){
+                temp->left->next =temp->right;
+                if(!temp->next) break;
+                temp->right->next = temp->next->left;
+                temp = temp->next;
+            }
+            curr = curr->left;
+        }
+        return root;
+    }
+};
