@@ -1,0 +1,23 @@
+int f(BinaryTreeNode < int > * root){
+    if(root==NULL)
+        return 0;
+    int l = root->left ? root->left->data : 0;
+    int r = root->right ? root->right->data : 0;
+    if(l+r>root->data){
+        root->data=l+r;
+    }else{
+        if(root->left)
+            root->left->data = root->data;
+        if(root->right)
+            root->right->data = root->data;
+    }
+    int lt = f(root->left);
+    int rt = f(root->right);
+    root->data = max(root->data,lt+rt);
+    return root->data;
+}
+
+void changeTree(BinaryTreeNode < int > * root) {
+    // Write your code here.
+    f(root);
+}
