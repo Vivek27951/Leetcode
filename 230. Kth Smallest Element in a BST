@@ -14,3 +14,36 @@ public:
         return v[k-1];
     }
 };
+
+
+
+
+
+
+
+
+
+
+class Solution {
+public:
+    
+    void f(TreeNode* root,int& index,int k,int& ans){
+        if(root==NULL)  return;
+        f(root->left,index,k,ans);
+        index++;
+        if(index==k){
+            ans = root->val;
+        }
+        f(root->right,index,k,ans);
+    }
+    
+    int kthSmallest(TreeNode* root, int k) {
+        int index = 0;
+        int ans = 0;
+        f(root,index,k,ans);
+        return ans;
+    }
+};
+
+
+
