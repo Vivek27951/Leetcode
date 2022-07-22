@@ -1,0 +1,52 @@
+class Node {
+public:
+    int sum;
+    int maxi;
+    int mini;
+    Node(){
+        sum = 0;
+        maxi = INT_MIN;
+        mini = INT_MAX;
+    }
+    Node(int s,int x,int y){
+        sum = s;
+        maxi = x;
+        mini = y;
+    }
+};
+
+class Solution {
+    int res = 0;
+public:
+    
+    Node* f(TreeNode* root){
+        if(!root){
+            Node* ans = new Node();
+            // cout<<"(1) "<<ans->size<<" "<<ans->maxi<<" "<<ans->mini<<endl;
+            return ans;
+        }
+        if(!root->left && !root->right){
+            Node* ans = new Node(root->val,root->val,root->val);
+            // cout<<"(2) "<<ans->size<<" "<<ans->maxi<<" "<<ans->mini<<endl;
+            res = max(res,ans->sum);
+            return ans;
+        }
+        Node* left = f(root->left);
+        Node* right = f(root->right);
+        if(left->maxi<root->val && root->val<right->mini){
+            Node* ans = new Node(left->sum+right->sum+root->val,
+                                 max(right->maxi,root->val),min(left->mini,root->val));
+            res = max(res,max(left->sum,max(right->sum,left->sum+right->sum+root->val)));
+            return ans;
+        }
+        Node* ans = new Node(max(left->sum,right->sum),INT_MAX,INT_MIN);
+        res = max(res,ans->sum);
+        return ans;
+    }
+    
+    int maxSumBST(TreeNode* root) {
+        if(!root)   return 0;
+        f(root);
+        return res;
+    }
+};
