@@ -1,0 +1,23 @@
+class Solution
+{
+    public:
+    
+    Node* f(Node* root,int& k){
+        if(root==NULL)
+            return NULL;
+        Node*right = f(root->right,k);
+        if(right)
+            return right;
+        k--;
+        if(k==0)
+            return root;
+        return f(root->left,k);
+    }
+    
+    int kthLargest(Node *root, int K)
+    {
+        //Your code here
+        Node* ans = f(root,K);
+        return ans->data;
+    }
+};
