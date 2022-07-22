@@ -28,3 +28,64 @@ public:
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+class Solution {
+    
+private:
+    stack<TreeNode*>sl;
+    stack<TreeNode*>sr;
+    
+    void push_left(TreeNode* root){
+        while(root){
+            sl.push(root);
+            root = root->left;
+        }
+    }
+    void push_right(TreeNode* root){
+        while(root){
+            sr.push(root);
+            root = root->right;
+        }
+    }
+    
+    int next_s(){
+        TreeNode* temp = sl.top();
+        sl.pop();
+        push_left(temp->right);
+        return temp->val;
+    }
+    
+    int next_e(){
+        TreeNode* temp = sr.top();
+        sr.pop();
+        push_right(temp->left);
+        return temp->val;
+    }
+    
+public:
+
+    bool findTarget(TreeNode* root, int k) {
+        push_left(root);
+        push_right(root);
+        int s = next_s();
+        int e = next_e();
+        while(s<e){
+            if(s+e==k)  return true;
+            else if(s+e>k) e = next_e();
+            else    s = next_s();
+        }
+        return false;
+    }
+};
