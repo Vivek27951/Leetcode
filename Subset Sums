@@ -1,0 +1,17 @@
+void f(vector<int> arr,int sum,int i,int n,vector<int>& v){
+        if(i==n){
+            v.push_back(sum);
+            return;
+        }
+        f(arr,sum+arr[i],i+1,n,v);
+        f(arr,sum,i+1,n,v);
+    }
+
+    vector<int> subsetSums(vector<int> arr, int N)
+    {
+        // Write Your Code here
+        int sum = 0;
+        vector<int>v;
+        f(arr,sum,0,N,v);
+        return v;
+    }
