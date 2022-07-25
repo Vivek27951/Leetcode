@@ -1,0 +1,33 @@
+class Solution {
+public:
+    
+    void f(vector<int>& c, int t,int sum,int idx,vector<int>& v,set<vector<int>>& ans){
+        if(sum>t)
+            return ;
+        if(idx==c.size()){
+            if(sum==t)
+                ans.insert(v);
+            return;
+        }
+        v.push_back(c[idx]);
+        sum+=c[idx];
+        f(c,t,sum,idx,v,ans);
+        f(c,t,sum,idx+1,v,ans);
+        sum-=c[idx];
+        v.pop_back();
+        f(c,t,sum,idx+1,v,ans);
+    }
+    
+    vector<vector<int>> combinationSum(vector<int>& c, int t) {
+        set<vector<int>> ans;
+        vector<int>v;
+        int sum = 0;
+        int idx = 0;
+        f(c,t,sum,idx,v,ans);
+        vector<vector<int>>res;
+        for(auto x:ans){
+            res.push_back(x);
+        }
+        return res;
+    }
+};
