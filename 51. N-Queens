@@ -1,0 +1,45 @@
+class Solution {
+public:
+    bool check(vector<string>& v,int r,int c){
+        for(int i=0;i<r;i++){
+            if(v[i][c]=='Q') 
+                return false;
+        }
+        int tr=r,tc=c;
+        while(tr>=0 && tc>=0){
+            if(v[tr][tc]=='Q')
+                return false;
+            tr--;tc--;
+        }
+        tr=r,tc=c;
+        while(tr>=0 && tc>=0 && tc<v.size()){
+            if(v[tr][tc]=='Q')
+                return false;
+            tr--;tc++;
+        }
+        return true;
+    }
+    
+    void f(vector<vector<string>>& ans,vector<string>& v,int n,int r){
+        if(r==n){
+            ans.push_back(v);
+            return;
+        }   
+        for(int i=0;i<n;i++){
+            if(check(v,r,i)){
+                v[r][i]='Q';
+                f(ans,v,n,r+1);
+                v[r][i]='.';
+            }
+        }
+    }
+    
+    vector<vector<string>> solveNQueens(int n) {
+        vector<vector<string>>ans;
+        string s ;
+        for(int i=0;i<n;i++) s+=".";
+        vector<string>v(n,s);
+        f(ans,v,n,0);
+        return ans;
+    }
+};
